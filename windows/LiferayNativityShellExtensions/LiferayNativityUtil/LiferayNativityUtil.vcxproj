@@ -74,7 +74,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <TargetExt>.dll</TargetExt>
-    <OutDir>$(SolutionDir)Output\Debug\x64</OutDir>
+    <OutDir>C:\Users\Dexter\Documents\Daplie\desktop-sync\Code\desktop-sync\Output\Debug\x64</OutDir>
     <IntDir>$(Configuration)\$(Platform)\</IntDir>
     <TargetName>$(ProjectName)_x64</TargetName>
   </PropertyGroup>
