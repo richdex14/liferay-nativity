@@ -67,39 +67,39 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(SolutionDir)$(Configuration)\$(Platform)\</OutDir>
-    <IntDir>$(Configuration)\$(Platform)\</IntDir>
-    <TargetName>$(ProjectName)_x86</TargetName>
+    <OutDir>$(SolutionDir)\Output\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>Intermediates\$(Platform)\$(Configuration)\</IntDir>
+    <TargetName>shell_extension-overlays_x86</TargetName>
     <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>C:\Users\Dexter\Documents\Daplie\desktop-sync\Code\desktop-sync\Output\Debug\x64</OutDir>
-    <IntDir>$(Configuration)\$(Platform)\</IntDir>
-    <TargetName>$(ProjectName)_x64</TargetName>
+    <OutDir>$(SolutionDir)\Output\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>Intermediates\$(Platform)\$(Configuration)\</IntDir>
+    <TargetName>shell_extension-overlays_x64</TargetName>
     <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(SolutionDir)$(Configuration)\$(Platform)\</OutDir>
-    <IntDir>$(Configuration)\$(Platform)\</IntDir>
-    <TargetName>$(ProjectName)_x86</TargetName>
+    <OutDir>$(SolutionDir)\Output\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>Intermediates\$(Platform)\$(Configuration)\</IntDir>
+    <TargetName>shell_extension-overlays_x86</TargetName>
     <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)$(Configuration)\$(Platform)\</OutDir>
-    <IntDir>$(Configuration)\$(Platform)\</IntDir>
-    <TargetName>$(ProjectName)_x64</TargetName>
+    <OutDir>$(SolutionDir)\Output\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>Intermediates\$(Platform)\$(Configuration)\</IntDir>
+    <TargetName>shell_extension-overlays_x64</TargetName>
     <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>C:\Users\Dexter\Documents\Daplie\desktop-sync\Code\includes\asio-1.10.6\include;..\LiferayNativityUtil;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\includes\asio-1.10.6\include;..\LiferayNativityUtil;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\$(Configuration)\$(Platform);</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(SolutionDir)Output\Debug\x86\LiferayNativityUtil_x86.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)Output\x86\Debug\LiferayNativityUtil_x86.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>LiferayNativityOverlays.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
@@ -107,12 +107,12 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>C:\Users\Dexter\Documents\Daplie\desktop-sync\Code\includes\asio-1.10.6\include;..\LiferayNativityUtil;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\includes\asio-1.10.6\include;..\LiferayNativityUtil;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\Users\Dexter\Documents\Daplie\desktop-sync\Code\desktop-sync\Output\Debug\x64;..\$(Configuration)\$(Platform)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(SolutionDir)Output\Debug\x64\LiferayNativityUtil_x64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)Output\x64\Debug\LiferayNativityUtil_x64.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>LiferayNativityOverlays.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
@@ -122,14 +122,14 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>C:\Users\Dexter\Documents\Daplie\desktop-sync\Code\includes\asio-1.10.6\include;..\LiferayNativityUtil;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\includes\asio-1.10.6\include;..\LiferayNativityUtil;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>..\$(Configuration)\$(Platform);</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(SolutionDir)Output\Release\x86\LiferayNativityUtil_x86.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)Output\x86\Release\LiferayNativityUtil_x86.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>LiferayNativityOverlays.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
@@ -139,14 +139,14 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>C:\Users\Dexter\Documents\Daplie\desktop-sync\Code\includes\asio-1.10.6\include;..\LiferayNativityUtil;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\includes\asio-1.10.6\include;..\LiferayNativityUtil;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>..\$(Configuration)\$(Platform);</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(SolutionDir)Output\Release\x64\LiferayNativityUtil_x64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)Output\x64\Release\LiferayNativityUtil_x64.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>LiferayNativityOverlays.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
