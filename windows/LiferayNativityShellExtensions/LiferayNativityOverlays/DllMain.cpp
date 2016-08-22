@@ -73,6 +73,7 @@ STDAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, void** ppv)
 		hResult = nativityOverlayFactory->QueryInterface(riid, ppv);
 		nativityOverlayFactory->Release();
 	}
+
 	return hResult;
 }
 

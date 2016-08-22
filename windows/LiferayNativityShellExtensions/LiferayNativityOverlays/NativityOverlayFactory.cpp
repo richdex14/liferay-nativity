@@ -61,8 +61,7 @@ IFACEMETHODIMP_(ULONG) NativityOverlayFactory::Release()
 	return cRef;
 }
 
-IFACEMETHODIMP NativityOverlayFactory::CreateInstance(
-    IUnknown* pUnkOuter, REFIID riid, void** ppv)
+IFACEMETHODIMP NativityOverlayFactory::CreateInstance(IUnknown* pUnkOuter, REFIID riid, void** ppv)
 {
 	HRESULT hResult = CLASS_E_NOAGGREGATION;
 
