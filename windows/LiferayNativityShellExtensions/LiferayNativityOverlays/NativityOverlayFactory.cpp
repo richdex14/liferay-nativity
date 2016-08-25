@@ -21,6 +21,13 @@ NativityOverlayFactory::NativityOverlayFactory(wchar_t* path) : _referenceCount(
 	InterlockedIncrement(&dllReferenceCount);
 }
 
+NativityOverlayFactory::NativityOverlayFactory(PWSTR overlay_name) : _referenceCount(1)
+{
+	InterlockedIncrement(&dllReferenceCount);
+
+	this->overlay_name = overlay_name;
+}
+
 NativityOverlayFactory::~NativityOverlayFactory()
 {
 	InterlockedDecrement(&dllReferenceCount);

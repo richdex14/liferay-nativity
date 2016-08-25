@@ -20,6 +20,7 @@ HINSTANCE instanceHandle = NULL;
 
 long dllReferenceCount = 0;
 
+std::map<PWSTR, PWSTR> GUID_mappings{ {OVERLAY_SYNCED_GUID, OVERLAY_SYNCED_NAME}, {OVERLAY_PENDING_GUID, OVERLAY_PENDING_NAME}, {OVERLAY_CHANGES_GUID, OVERLAY_CHANGES_NAME}, {OVERLAY_ERROR_GUID, OVERLAY_ERROR_NAME} };
 
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD dwReason, LPVOID lpReserved)
 {
@@ -41,16 +42,18 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD dwReason, LPVOID lpReserved)
 STDAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, void** ppv)
 {
 	HRESULT hResult = CLASS_E_CLASSNOTAVAILABLE;
-	GUID guid;
+	//GUID guid;
+	PWSTR GUID_str;
 
-	hResult = CLSIDFromString(OVERLAY_GUID, (LPCLSID)&guid);
+	hResult = StringFromCLSID(rclsid, &GUID_str);
 
 	if (hResult != S_OK)
 	{
 		return hResult;
 	}
-
-	if (!IsEqualCLSID(guid, rclsid))
+	
+	// make sure its one of our GUIDs
+	if (GUID_mappings.find(GUID_str) == GUID_mappings.end())
 	{
 		return hResult;
 	}
@@ -88,6 +91,7 @@ HRESULT _stdcall DllRegisterServer(void)
 {
 	HRESULT hResult = S_OK;
 
+
 	wchar_t szModule[MAX_PATH];
 
 	if (GetModuleFileName(instanceHandle, szModule, ARRAYSIZE(szModule)) == 0)
@@ -97,27 +101,34 @@ HRESULT _stdcall DllRegisterServer(void)
 		return hResult;
 	}
 
-	GUID guid;
+	
 
-	hResult = CLSIDFromString(OVERLAY_GUID, (LPCLSID)&guid);
-
-	if (hResult != S_OK)
+	for (std::map<PWSTR, PWSTR>::const_iterator it = GUID_mappings.begin(); it != GUID_mappings.end(); it++)
 	{
-		return hResult;
-	}
+		GUID guid;
+		PWSTR OVERLAY_GUID = it->first;
+		PWSTR OVERLAY_NAME = it->second;
 
-	hResult = NativityOverlayRegistrationHandler::RegisterCOMObject(szModule, guid);
+		hResult = CLSIDFromString(OVERLAY_GUID, (LPCLSID)&guid);
 
-	if (!SUCCEEDED(hResult))
-	{
-		return hResult;
-	}
+		if (hResult != S_OK)
+		{
+			return hResult;
+		}
 
-	hResult = NativityOverlayRegistrationHandler::MakeRegistryEntries(guid, OVERLAY_NAME);
+		hResult = NativityOverlayRegistrationHandler::RegisterCOMObject(szModule, guid);
 
-	if (!SUCCEEDED(hResult))
-	{
-		return hResult;
+		if (!SUCCEEDED(hResult))
+		{
+			return hResult;
+		}
+
+		hResult = NativityOverlayRegistrationHandler::MakeRegistryEntries(guid, OVERLAY_NAME);
+
+		if (!SUCCEEDED(hResult))
+		{
+			return hResult;
+		}
 	}
 
 	return hResult;
@@ -135,27 +146,32 @@ STDAPI DllUnregisterServer(void)
 		return hResult;
 	}
 
-	GUID guid;
-
-	hResult = CLSIDFromString(OVERLAY_GUID, (LPCLSID)&guid);
-
-	if (hResult != S_OK)
+	for (std::map<PWSTR, PWSTR>::const_iterator it = GUID_mappings.begin(); it != GUID_mappings.end(); it++)
 	{
-		return hResult;
-	}
+		GUID guid;
+		PWSTR OVERLAY_GUID = it->first;
+		PWSTR OVERLAY_NAME = it->second;
 
-	hResult = NativityOverlayRegistrationHandler::UnregisterCOMObject(guid);
+		hResult = CLSIDFromString(OVERLAY_GUID, (LPCLSID)&guid);
 
-	if (!SUCCEEDED(hResult))
-	{
-		return hResult;
-	}
+		if (hResult != S_OK)
+		{
+			return hResult;
+		}
 
-	hResult = NativityOverlayRegistrationHandler::RemoveRegistryEntries(OVERLAY_NAME);
+		hResult = NativityOverlayRegistrationHandler::UnregisterCOMObject(guid);
 
-	if (!SUCCEEDED(hResult))
-	{
-		return hResult;
+		if (!SUCCEEDED(hResult))
+		{
+			return hResult;
+		}
+
+		hResult = NativityOverlayRegistrationHandler::RemoveRegistryEntries(OVERLAY_NAME);
+
+		if (!SUCCEEDED(hResult))
+		{
+			return hResult;
+		}
 	}
 
 	return hResult;

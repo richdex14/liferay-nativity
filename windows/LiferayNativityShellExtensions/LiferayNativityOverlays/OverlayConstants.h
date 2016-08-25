@@ -13,8 +13,15 @@
  */
 
 #define	OVERLAY_ID					3
-#define OVERLAY_GUID				L"{0DD5B4B0-25AF-4e09-A46B-9F274F3D7003}"
-#define OVERLAY_NAME				L" AAAAA_TEST"//L"LiferayNativityErrorOverlay"
+#define OVERLAY_SYNCED_GUID			L"{0DD5B4B0-25AF-4e09-A46B-9F274F3D7003}"
+#define OVERLAY_PENDING_GUID		L"{0DD5B4B1-25AF-4e09-A46B-9F274F3D7003}"
+#define OVERLAY_CHANGES_GUID		L"{0DD5B4B2-25AF-4e09-A46B-9F274F3D7003}"
+#define OVERLAY_ERROR_GUID			L"{0DD5B4B3-25AF-4e09-A46B-9F274F3D7003}"
+
+#define OVERLAY_SYNCED_NAME			L"     desktop-sync-icon-synced"
+#define OVERLAY_PENDING_NAME		L"     desktop-sync-icon-pending"
+#define OVERLAY_CHANGES_NAME		L"     desktop-sync-icon-changes"
+#define OVERLAY_ERROR_NAME			L"     desktop-sync-icon-error"
 
 #define REGISTRY_OVERLAY_KEY		L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\ShellIconOverlayIdentifiers"
 #define REGISTRY_CLSID				L"CLSID"

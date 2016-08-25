@@ -78,20 +78,21 @@ IFACEMETHODIMP LiferayNativityOverlay::GetPriority(int* pPriority)
 
 IFACEMETHODIMP LiferayNativityOverlay::IsMemberOf(PCWSTR pwszPath, DWORD dwAttrib)
 {
-	if (!_IsOverlaysEnabled())
-	{
-		return MAKE_HRESULT(S_FALSE, 0, 0);
-	}
+	// I believe I can safely ignore this for cloud sync app. overlays should always be on
+	//if (!_IsOverlaysEnabled())
+	//{
+	//	return MAKE_HRESULT(S_FALSE, 0, 0);
+	//}
 
-	if (!FileUtil::IsFileFiltered(pwszPath))
-	{
-		return MAKE_HRESULT(S_FALSE, 0, 0);
-	}
+	//if (!FileUtil::IsFileFiltered(pwszPath))
+	//{
+	//	return MAKE_HRESULT(S_FALSE, 0, 0);
+	//}
 
-	if (!_IsMonitoredFileState(pwszPath))
-	{
-		return MAKE_HRESULT(S_FALSE, 0, 0);
-	}
+	//if (!_IsMonitoredFileState(pwszPath))
+	//{
+	//	return MAKE_HRESULT(S_FALSE, 0, 0);
+	//}
 
 	return MAKE_HRESULT(S_OK, 0, 0);
 }
