@@ -12,6 +12,8 @@
  * details.
  */
 
+#include <map>
+
 #define	OVERLAY_ID					3
 #define OVERLAY_SYNCED_GUID			L"{0DD5B4B0-25AF-4e09-A46B-9F274F3D7003}"
 #define OVERLAY_PENDING_GUID		L"{0DD5B4B1-25AF-4e09-A46B-9F274F3D7003}"
@@ -22,6 +24,11 @@
 #define OVERLAY_PENDING_NAME		L"     desktop-sync-icon-pending"
 #define OVERLAY_CHANGES_NAME		L"     desktop-sync-icon-changes"
 #define OVERLAY_ERROR_NAME			L"     desktop-sync-icon-error"
+
+#pragma once
+
+const std::map<PWSTR, PWSTR> GUID_mappings{ { OVERLAY_SYNCED_GUID, OVERLAY_SYNCED_NAME },{ OVERLAY_PENDING_GUID, OVERLAY_PENDING_NAME },{ OVERLAY_CHANGES_GUID, OVERLAY_CHANGES_NAME },{ OVERLAY_ERROR_GUID, OVERLAY_ERROR_NAME } };
+
 
 #define REGISTRY_OVERLAY_KEY		L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\ShellIconOverlayIdentifiers"
 #define REGISTRY_CLSID				L"CLSID"

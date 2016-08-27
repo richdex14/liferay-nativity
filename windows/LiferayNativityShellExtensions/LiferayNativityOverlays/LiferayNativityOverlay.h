@@ -31,6 +31,7 @@ class LiferayNativityOverlay : public IShellIconOverlayIdentifier
 {
 	public:
 		LiferayNativityOverlay();
+		LiferayNativityOverlay(PWSTR overlay_name);
 
 		IFACEMETHODIMP_(ULONG) AddRef();
 
@@ -54,7 +55,11 @@ class LiferayNativityOverlay : public IShellIconOverlayIdentifier
 
 		long _referenceCount;
 
+		PWSTR overlay_name;
+
 		CommunicationSocket* _communicationSocket;
+
+		const std::map<PWSTR, int>ICON_POS_MAPPINGS{ {OVERLAY_ERROR_NAME, 0}, {OVERLAY_SYNCED_NAME, 1}, {OVERLAY_PENDING_NAME, 2}, {OVERLAY_CHANGES_NAME, 3} };
 };
 
 #endif

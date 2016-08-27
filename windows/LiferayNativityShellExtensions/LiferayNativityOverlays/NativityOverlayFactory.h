@@ -23,7 +23,7 @@
 class NativityOverlayFactory : public IClassFactory
 {
 	public:
-		NativityOverlayFactory(wchar_t* path);
+		//NativityOverlayFactory(wchar_t* path);
 		NativityOverlayFactory(PWSTR overlay_name);
 
 		IFACEMETHODIMP_(ULONG) AddRef();

@@ -20,8 +20,6 @@ HINSTANCE instanceHandle = NULL;
 
 long dllReferenceCount = 0;
 
-std::map<PWSTR, PWSTR> GUID_mappings{ {OVERLAY_SYNCED_GUID, OVERLAY_SYNCED_NAME}, {OVERLAY_PENDING_GUID, OVERLAY_PENDING_NAME}, {OVERLAY_CHANGES_GUID, OVERLAY_CHANGES_NAME}, {OVERLAY_ERROR_GUID, OVERLAY_ERROR_NAME} };
-
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD dwReason, LPVOID lpReserved)
 {
 	switch (dwReason)
@@ -52,11 +50,11 @@ STDAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, void** ppv)
 		return hResult;
 	}
 	
-	// make sure its one of our GUIDs
-	if (GUID_mappings.find(GUID_str) == GUID_mappings.end())
-	{
-		return hResult;
-	}
+	//// make sure its one of our GUIDs
+	//if (GUID_mappings.find(GUID_str) == GUID_mappings.end())
+	//{
+	//	return hResult;
+	//}
 
 	hResult = E_OUTOFMEMORY;
 
@@ -69,7 +67,9 @@ STDAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, void** ppv)
 		return hResult;
 	}
 
-	NativityOverlayFactory* nativityOverlayFactory = new NativityOverlayFactory(szModule);
+	PWSTR overlay_name = GUID_mappings.at(overlay_name);
+
+	NativityOverlayFactory* nativityOverlayFactory = new NativityOverlayFactory(overlay_name);
 
 	if (nativityOverlayFactory)
 	{
@@ -100,8 +100,6 @@ HRESULT _stdcall DllRegisterServer(void)
 
 		return hResult;
 	}
-
-	
 
 	for (std::map<PWSTR, PWSTR>::const_iterator it = GUID_mappings.begin(); it != GUID_mappings.end(); it++)
 	{

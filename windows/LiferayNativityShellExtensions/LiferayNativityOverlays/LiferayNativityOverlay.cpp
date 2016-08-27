@@ -27,6 +27,11 @@ LiferayNativityOverlay::LiferayNativityOverlay(): _communicationSocket(0), _refe
 {
 }
 
+LiferayNativityOverlay::LiferayNativityOverlay(PWSTR overlay_name) : _referenceCount(1)
+{
+	this->overlay_name = overlay_name;
+}
+
 LiferayNativityOverlay::~LiferayNativityOverlay(void)
 {
 }
@@ -89,17 +94,18 @@ IFACEMETHODIMP LiferayNativityOverlay::IsMemberOf(PCWSTR pwszPath, DWORD dwAttri
 	//	return MAKE_HRESULT(S_FALSE, 0, 0);
 	//}
 
-	//if (!_IsMonitoredFileState(pwszPath))
-	//{
-	//	return MAKE_HRESULT(S_FALSE, 0, 0);
-	//}
+	if (!_IsMonitoredFileState(pwszPath))
+	{
+		return MAKE_HRESULT(S_FALSE, 0, 0);
+	}
 
 	return MAKE_HRESULT(S_OK, 0, 0);
 }
 
 IFACEMETHODIMP LiferayNativityOverlay::GetOverlayInfo(PWSTR pwszIconFile, int cchMax, int* pIndex, DWORD* pdwFlags)
 {
-	*pIndex = 0;
+	// make sure you show the right icons
+	*pIndex = ICON_POS_MAPPINGS.at(this->overlay_name);
 
 	*pdwFlags = ISIOI_ICONFILE | ISIOI_ICONINDEX;
 
@@ -131,68 +137,15 @@ bool LiferayNativityOverlay::_IsOverlaysEnabled()
 	return success;
 }
 
+// adjusting the purpose of this function to determine whether or not this file should be "montiored" by this overlay ie. should we show this icon?
 bool LiferayNativityOverlay::_IsMonitoredFileState(const wchar_t* filePath)
 {
-	bool needed = false;
+	bool hResult = false;
 
-	if (_communicationSocket == 0)
+	if (this->overlay_name == OVERLAY_ERROR_NAME)
 	{
-		_communicationSocket = new CommunicationSocket(PORT);
+		hResult = true;
 	}
 
-	Json::Value jsonRoot;
-
-	jsonRoot[NATIVITY_COMMAND] = NATIVITY_GET_FILE_ICON_ID;
-	jsonRoot[NATIVITY_VALUE] = StringUtil::toString(filePath);
-
-	Json::FastWriter jsonWriter;
-
-	wstring* message = new wstring();
-
-	message->append(StringUtil::toWstring(jsonWriter.write(jsonRoot)));
-
-	wstring* response = new wstring();
-
-	if (!_communicationSocket->SendMessageReceiveResponse(message->c_str(), response))
-	{
-		delete message;
-		delete response;
-
-		return false;
-	}
-
-	Json::Reader jsonReader;
-	Json::Value jsonResponse;
-
-	if (!jsonReader.parse(StringUtil::toString(*response), jsonResponse))
-	{
-		delete message;
-		delete response;
-
-		return false;
-	}
-
-	Json::Value jsonValue = jsonResponse.get(NATIVITY_VALUE, "");
-
-	wstring valueString = StringUtil::toWstring(jsonValue.asString());
-
-	if (valueString.size() == 0)
-	{
-		delete message;
-		delete response;
-
-		return false;
-	}
-
-	int state = _wtoi(valueString.c_str());
-
-	if (state == OVERLAY_ID)
-	{
-		needed = true;
-	}
-
-	delete message;
-	delete response;
-
-	return needed;
+	return hResult;
 }

@@ -16,10 +16,10 @@
 
 extern long dllReferenceCount;
 
-NativityOverlayFactory::NativityOverlayFactory(wchar_t* path) : _referenceCount(1)
-{
-	InterlockedIncrement(&dllReferenceCount);
-}
+//NativityOverlayFactory::NativityOverlayFactory(wchar_t* path) : _referenceCount(1)
+//{
+//	InterlockedIncrement(&dllReferenceCount);
+//}
 
 NativityOverlayFactory::NativityOverlayFactory(PWSTR overlay_name) : _referenceCount(1)
 {
@@ -80,7 +80,7 @@ IFACEMETHODIMP NativityOverlayFactory::CreateInstance(IUnknown* pUnkOuter, REFII
 	hResult = E_OUTOFMEMORY;
 
 	LiferayNativityOverlay* lrOverlay =
-	    new(std::nothrow) LiferayNativityOverlay();
+	    new(std::nothrow) LiferayNativityOverlay(this->overlay_name);
 
 	if (!lrOverlay)
 	{
