@@ -15,6 +15,7 @@
 #include "NativityOverlayRegistrationHandler.h"
 #include "NativityOverlayFactory.h"
 #include "stdafx.h"
+#include <algorithm>
 
 HINSTANCE instanceHandle = NULL;
 
@@ -49,12 +50,12 @@ STDAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, void** ppv)
 	{
 		return hResult;
 	}
-	
-	//// make sure its one of our GUIDs
-	//if (GUID_mappings.find(GUID_str) == GUID_mappings.end())
-	//{
-	//	return hResult;
-	//}
+
+	// make sure its one of our GUIDs
+	if (GUID_mappings.find(GUID_str) == GUID_mappings.end())
+	{
+		return hResult;
+	}
 
 	hResult = E_OUTOFMEMORY;
 
@@ -67,7 +68,7 @@ STDAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, void** ppv)
 		return hResult;
 	}
 
-	PWSTR overlay_name = GUID_mappings.at(overlay_name);
+	PWSTR overlay_name = GUID_mappings.at(GUID_str);
 
 	NativityOverlayFactory* nativityOverlayFactory = new NativityOverlayFactory(overlay_name);
 
