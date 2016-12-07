@@ -15,6 +15,8 @@
 #ifndef LIFERAYNATIVITYOVERLAY_H
 #define LIFERAYNATIVITYOVERLAY_H
 
+#include "DLLCommunication.h"
+
 #include "RegistryUtil.h"
 #include "StringUtil.h"
 #include "UtilConstants.h"
